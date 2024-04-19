@@ -20,6 +20,7 @@ jobs:
             docker build -f ./Dockerfile -t wisecow:latest .
             echo -n "verifying images:"
             docker images
+            docker run -d -p 4499:4499 wisecow:latest
       - name: Deploy to minikube
         run: |
             kubectl apply -f ./kubernetes/deployment.yaml
