@@ -6,13 +6,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Build and Deploy Wisecow on Minikube Cluster using Github Actions via Docker
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Start minikube
         uses: medyagh/setup-minikube@master
       - name: Try the cluster !
-        run: kubectl get pods -A
+        run: |
+            kubectl get pods -A
+            kubectl get svc -A
       - name: Build the docker image
         run: |
             export SHELL=/bin/bash
@@ -25,16 +28,7 @@ jobs:
         run: |
             kubectl apply -f ./kubernetes/deployment.yaml
             kubectl apply -f ./kubernetes/service.yaml
-            kubectl get pods -A
-            kubectl get svc -A
-      # - name: Test the deployment
-      #   run: |
-      #       export SHELL=/bin/bash
-      #       minikube service wisecow
-      #       curl $(minikube service wisecow --url)
       - name: Test service URLs
         run: |
             minikube service list
             minikube service wisecow --url
-            minikube service wisecow --url | xargs curl
-            minikube service wisecow --url | sed 's/4499/4499/' | xargs curl
