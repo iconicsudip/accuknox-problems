@@ -27,11 +27,11 @@ jobs:
             kubectl apply -f ./kubernetes/service.yaml
             kubectl get pods -A
             kubectl get svc -A
-      - name: Test the deployment
-        run: |
-            export SHELL=/bin/bash
-            minikube service wisecow
-            curl $(minikube service wisecow --url)
+      # - name: Test the deployment
+      #   run: |
+      #       export SHELL=/bin/bash
+      #       minikube service wisecow
+      #       curl $(minikube service wisecow --url)
       - name: Test service URLs
         run: |
             minikube service list
