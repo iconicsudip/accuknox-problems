@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI/CD of Wisecow
 on:
   push:
     branches:
@@ -9,23 +9,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build Docker Image
-        run: docker build -t thissudip/wisecow:0.0.1 .
-      - name: Push Docker Image
-        run: docker push thissudip/wisecow:0.0.1
-      - name: Deploy to Kubernetes
-        uses: azure/k8s-deploy@v1
-        with:
-          version: 'latest'
-          installKubectl: true
-      - name: Set Kubeconfig
-        run: echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
-      - name: Deploy to Kubernetes
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+      - name: Try the cluster !
+        run: kubectl get pods -A
+      - name: Build the docker image
         run: |
-          kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/service.yaml
+            export SHELL=/bin/bash
+            eval $(minikube -p minikube docker-env)
+            docker build -f ./Dockerfile -t wisecow:latest .
+            echo -n "verifying images:"
+            docker images
+      - name: Deploy to minikube
+        run: |
+            kubectl apply -f ./kubernetes/deployment.yaml
+            kubectl apply -f ./kubernetes/service.yaml
+            kubectl port-forward service/wisecow-service 4499:4499
+            kubectl get pods -A
+            kubectl get svc -A
+      - name: Test the deployment
+        run: |
+            export SHELL=/bin/bash
+            minikube service wisecow-service
+            curl $(minikube service wisecow-service --url)
+      - name: Test service URLs
+        run: |
+            minikube service list
+            minikube service wisecow-service --url
+            minikube service wisecow-service --url | xargs curl
+            minikube service wisecow-service --url | sed 's/4499/4499/' | xargs curl
