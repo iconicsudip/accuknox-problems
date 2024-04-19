@@ -16,7 +16,7 @@ jobs:
         run: |
             export SHELL=/bin/bash
             eval $(minikube -p minikube docker-env)
-            docker build -t wisecow:latest .
+            docker build -f ./Dockerfile -t  wisecow:latest .
             echo -n "verifying images:"
             docker images
             docker run -d -p 4499:4499 wisecow:latest
