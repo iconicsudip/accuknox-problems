@@ -31,4 +31,4 @@ jobs:
       - name: Test service URLs
         run: |
             minikube service list
-            minikube service wisecow --url --port=4499
+            minikube service wisecow --url
