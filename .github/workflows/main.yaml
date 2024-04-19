@@ -24,11 +24,11 @@ jobs:
         run: |
             kubectl apply -f ./kubernetes/deployment.yaml
             kubectl apply -f ./kubernetes/service.yaml
-            kubectl port-forward service/wisecow 4499:4499
             kubectl get pods -A
             kubectl get svc -A
       - name: Test the deployment
         run: |
+            kubectl port-forward service/wisecow 4499:4499
             export SHELL=/bin/bash
             minikube service wisecow-service
             curl $(minikube service wisecow --url)
