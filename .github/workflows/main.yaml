@@ -28,10 +28,6 @@ jobs:
         run: |
             kubectl apply -f ./kubernetes/deployment.yaml
             kubectl apply -f ./kubernetes/service.yaml
-      - name: Verify deployment
-        run: |
-            kubectl get pods
-            kubectl get svc
       - name: Test service URLs
         run: |
             minikube service list
