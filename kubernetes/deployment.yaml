@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: wisecow
-        image: wisecow:latest
+        image: "wisecow:latest"
         resources:
           limits:
             memory: "128Mi"
