@@ -34,6 +34,5 @@ jobs:
             kubectl get svc
       - name: Test service URLs
         run: |
-            minikube tunnel --cleanup
             minikube service list
             minikube service wisecow --url
