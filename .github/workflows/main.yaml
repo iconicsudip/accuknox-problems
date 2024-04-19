@@ -24,9 +24,9 @@ jobs:
         run: |
             kubectl apply -f ./kubernetes/deployment.yaml
             kubectl apply -f ./kubernetes/service.yaml
-            kubectl port-forward service/wisecow-service 4499:4499
             kubectl get pods -A
             kubectl get svc -A
+            kubectl port-forward service/wisecow 4499:4499
       - name: Test the deployment
         run: |
             export SHELL=/bin/bash
