@@ -7,10 +7,12 @@ spec:
   replicas: 3
   selector:
     matchLabels:
+      run: wisecow
       app: wisecow
   template:
     metadata:
       labels:
+        run: wisecow
         app: wisecow
     spec:
       containers:
