@@ -11,6 +11,6 @@ spec:
   - name: http
     port: 4499
     targetPort: 4499
-    nodePort: 4499
+    nodePort: 30000
   externalIPs:
     - 192.168.1.145
