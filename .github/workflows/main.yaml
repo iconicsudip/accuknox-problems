@@ -36,3 +36,6 @@ jobs:
         run: |
             minikube service list
             minikube service wisecow --url
+      - name: Port Forwarding
+        run: |
+            kubectl port-forward svc/wisecow 4499:4499
