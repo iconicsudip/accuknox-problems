@@ -28,7 +28,6 @@ jobs:
             kubectl get svc -A
       - name: Test the deployment
         run: |
-            kubectl port-forward service/wisecow 4499:4499
             export SHELL=/bin/bash
             minikube service wisecow-service
             curl $(minikube service wisecow --url)
