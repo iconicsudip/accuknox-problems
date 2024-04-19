@@ -16,6 +16,7 @@ spec:
       containers:
       - name: wisecow
         image: "wisecow:latest"
+        imagePullPolicy: Never
         resources:
           limits:
             memory: "128Mi"
