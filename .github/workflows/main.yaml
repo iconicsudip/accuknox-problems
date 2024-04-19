@@ -30,6 +30,6 @@ jobs:
             kubectl get svc
       - name: Test service URLs
         run: |
-            kubectl port-forward svc/wisecow 4499:4499
+            kubectl port-forward service/wisecow 4499:4499
             minikube service list
             minikube service wisecow --url
