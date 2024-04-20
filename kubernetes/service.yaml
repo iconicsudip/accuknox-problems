@@ -9,6 +9,6 @@ spec:
     app: wisecow
   ports:
   - name: http
-    port: 4499
+    port: 30000
     targetPort: 4499
-    nodePort: 30000
+    # nodePort: 30000
