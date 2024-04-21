@@ -24,3 +24,16 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 4499
+        env:
+        - name: "TLS_CERT_FILE"
+          value: "/etc/tls/tls.crt"
+        - name: "TLS_KEY_FILE"
+          value: "/etc/tls/tls.key"
+        volumeMounts:
+        - name: tls-certs
+          mountPath: "/etc/tls"
+          readOnly: true
+      volumes:
+      - name: tls-certs
+        secret:
+          secretName: wisecow-tls
