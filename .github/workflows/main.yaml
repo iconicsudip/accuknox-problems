@@ -14,8 +14,8 @@ jobs:
         uses: medyagh/setup-minikube@master
       - name: Generate TLS Certificates
         run: |
-          openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=wisecow.local"
-
+          MINIKUBE_IP=$(minikube ip)
+          openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=$MINIKUBE_IP"
       - name: Create Kubernetes Secret
         run: |
           kubectl create secret tls wisecow-tls --cert=tls.crt --key=tls.key
