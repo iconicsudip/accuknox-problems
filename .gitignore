@@ -1,0 +1,3 @@
+# Ignore .crt and .key files
+*.crt
+*.key
